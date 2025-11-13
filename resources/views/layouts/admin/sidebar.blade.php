@@ -46,27 +46,6 @@
             <div class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle {{ request()->routeIs('warga.*') || request()->routeIs('user.*') || request()->routeIs('umkm.*') ? 'active' : '' }}"
                    data-bs-toggle="dropdown">
-                    <i class="fa fa-laptop me-2"></i>Fitur
-                </a>
-                <div class="dropdown-menu bg-transparent border-0">
-                    <a href="{{ route('warga.index') }}"
-                       class="dropdown-item {{ request()->routeIs('warga.*') ? 'active' : '' }}">
-                        <i class="fa fa-users me-2"></i>Warga
-                    </a>
-                    <a href="{{ route('users.index') }}"
-                       class="dropdown-item {{ request()->routeIs('users.*') ? 'active' : '' }}">
-                        <i class="fa fa-user me-2"></i>User
-                    </a>
-                    <a href="{{ route('umkm.index') }}"
-                       class="dropdown-item {{ request()->routeIs('umkm.*') ? 'active' : '' }}">
-                        <i class="fa fa-store me-2"></i>UMKM
-                    </a>
-                </div>
-            </div>
-
-            <div class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle {{ request()->routeIs('warga.*') || request()->routeIs('user.*') || request()->routeIs('umkm.*') ? 'active' : '' }}"
-                   data-bs-toggle="dropdown">
                     <i class="fa fa-database me-2"></i>Master Data
                 </a>
                 <div class="dropdown-menu bg-transparent border-0">
