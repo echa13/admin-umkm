@@ -36,8 +36,10 @@
 
 
         <!-- Back to Top -->
-        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
-    </div>
+         <a href="https://wa.me/628123456789?text=Halo%20saya%20ingin%20bertanya" class="whatsapp-float" target="_blank">
+            <ion-icon name="logo-whatsapp"></ion-icon>
+        </a>
+      </div>
 
     @include('layouts.admin.js')
 </body>

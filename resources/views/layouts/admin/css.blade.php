@@ -19,3 +19,28 @@
 
     <!-- Template Stylesheet -->
     <link href="{{ asset('asset/css/style.css') }}" rel="stylesheet">
+
+    <style>
+        .whatsapp-float {
+            position: fixed;
+            width: 55px;
+            height: 55px;
+            bottom: 20px;
+            right: 20px;
+            background-color: #25D366;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            font-size: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+            transition: 0.3s;
+        }
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            background-color: #1ebe5d;
+        }
+    </style>
