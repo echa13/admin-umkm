@@ -21,7 +21,7 @@ class UmkmController extends Controller
      */
     public function create()
     {
-        return view('page.Umkm.create');
+        return view('pages.Umkm.create');
     }
 
     /**
@@ -51,7 +51,7 @@ class UmkmController extends Controller
     public function show($id)
     {
         $umkm = Umkm::findOrFail($id);
-        return view('page.umkm.show', compact('umkm'));
+        return view('pages.umkm.show', compact('umkm'));
     }
 
     /**
@@ -60,7 +60,7 @@ class UmkmController extends Controller
     public function edit($id)
     {
         $umkm = Umkm::findOrFail($id);
-        return view('umkm.edit', compact('umkm'));
+        return view('pages.umkm.edit', compact('umkm'));
     }
 
     /**
