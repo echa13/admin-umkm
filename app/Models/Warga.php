@@ -42,12 +42,8 @@ class Warga extends Model
         // 'is_active' => 'boolean',
     ];
 
-    /**
-     * Hubungan (Relationship) dengan Model lain (Contoh)
-     * * Contoh relasi One-to-Many, jika satu Warga bisa memiliki banyak data booking
-     * public function bookings()
-     * {
-     * return $this->hasMany(BookingHomestay::class, 'warga_id', 'warga_id');
-     * }
-     */
+    public function umkm()
+    {
+        return $this->hasMany(Umkm::class, 'pemilik_warga_id', 'warga_id');
+    }
 }

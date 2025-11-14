@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Umkm;
+use App\Models\Warga;
 use Illuminate\Http\Request;
 
 class UmkmController extends Controller
@@ -13,7 +14,7 @@ class UmkmController extends Controller
     {
         // Ambil semua data UMKM
         $umkms = Umkm::all();
-        return view('pages.Umkm.index', compact('umkms'));
+        return view('pages.umkm.index', compact('umkms'));
     }
 
     /**
@@ -21,7 +22,9 @@ class UmkmController extends Controller
      */
     public function create()
     {
-        return view('pages.Umkm.create');
+        $warga = Warga::orderBy('nama')->get();
+
+        return view('pages.umkm.create', compact('warga'));
     }
 
     /**
@@ -30,14 +33,14 @@ class UmkmController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama_usaha'   => 'required|string|max:150',
-            'pemilik_nama' => 'required|string|max:150',
-            'alamat'       => 'required|string|max:255',
-            'rt'           => 'nullable|string|max:5',
-            'rw'           => 'nullable|string|max:5',
-            'kategori'     => 'required|string|max:100',
-            'kontak'       => 'nullable|string|max:20',
-            'deskripsi'    => 'nullable|string',
+            'nama_usaha'       => 'required|string|max:150',
+            'pemilik_warga_id' => 'required|integer', // ⬅ ganti ini
+            'alamat'           => 'required|string|max:255',
+            'rt'               => 'nullable|string|max:5',
+            'rw'               => 'nullable|string|max:5',
+            'kategori'         => 'required|string|max:100',
+            'kontak'           => 'nullable|string|max:20',
+            'deskripsi'        => 'nullable|string',
         ]);
 
         Umkm::create($request->all());
@@ -59,8 +62,10 @@ class UmkmController extends Controller
      */
     public function edit($id)
     {
-        $umkm = Umkm::findOrFail($id);
-        return view('pages.umkm.edit', compact('umkm'));
+        $umkm  = Umkm::findOrFail($id);
+        $warga = Warga::orderBy('nama')->get(); // ⬅ Tambahkan ini
+
+        return view('pages.umkm.edit', compact('umkm', 'warga'));
     }
 
     /**

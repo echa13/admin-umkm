@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('umkm', function (Blueprint $table) {
             $table->increments('umkm_id'); // Primary Key
             $table->string('nama_usaha', 150);
+            $table->unsignedBigInteger('pemilik_warga_id');
             $table->string('alamat', 255);
             $table->string('rt', 5)->nullable();
             $table->string('rw', 5)->nullable();
@@ -21,6 +22,9 @@ return new class extends Migration
             $table->string('kontak', 20)->nullable();
             $table->text('deskripsi')->nullable();
             $table->timestamps();
+
+            // Menambahkan foreign key constraint
+            $table->foreign('pemilik_warga_id')->references('warga_id')->on('warga')->onDelete('cascade');
         });
     }
 
