@@ -72,4 +72,72 @@
     </div>
 </div>
 
+<style>
+    /* CARD WARGA */
+.warga-card {
+    border-radius: 18px;
+    overflow: hidden;
+    border: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+    background: #ffffff;
+}
+
+.warga-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.12);
+}
+
+/* HEADER */
+.warga-header {
+    background: linear-gradient(135deg, #2a6df4, #4f8dfc);
+    color: #fff;
+    padding: 12px;
+    text-align: center;
+    border-bottom: none;
+}
+
+/* AVATAR CIRCLE */
+.avatar-wrapper {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    background: linear-gradient(135deg, #dfe9ff, #f3f6ff);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.avatar-wrapper i {
+    font-size: 40px;
+    color: #2a6df4;
+}
+
+/* TEXT LIST */
+.info-list p {
+    margin: 6px 0;
+    font-size: 14px;
+}
+
+/* BUTTONS */
+.btn-warning.btn-sm {
+    border-radius: 10px;
+    padding: 6px 10px;
+}
+
+.btn-danger.btn-sm {
+    border-radius: 10px;
+    padding: 6px 10px;
+}
+
+/* Hover animated */
+.btn-warning:hover,
+.btn-danger:hover {
+    transform: scale(1.05);
+    transition: 0.2s;
+}
+
+</style>
 @endsection
