@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Faker\Factory as Faker;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -17,7 +18,7 @@ class WargaUmkmSeeder extends Seeder
         // ----------------------
         // Generate 100 Warga
         // ----------------------
-        $wargaIds = []; 
+        $wargaIds = [];
 
         for ($i = 1; $i <= 100; $i++) {
             $id = DB::table('warga')->insertGetId([
