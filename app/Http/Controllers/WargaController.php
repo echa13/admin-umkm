@@ -9,9 +9,18 @@ class WargaController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $datas = Warga::all();
+        $datas = Warga::when($request->search, function ($query) use ($request) {
+            $query->where('nama', 'like', '%' . $request->search . '%')
+                ->orWhere('no_ktp', 'like', '%' . $request->search . '%');
+        })
+            ->when($request->jenis_kelamin, function ($query) use ($request) {
+                $query->where('jenis_kelamin', $request->jenis_kelamin);
+            })
+            ->orderBy('warga_id', 'DESC')
+            ->paginate(8); // jumlah data per halaman
+
         return view('pages.warga.index', compact('datas'));
     }
 

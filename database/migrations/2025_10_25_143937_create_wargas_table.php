@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('pekerjaan')->nullable();
             $table->string('telp', 30)->nullable();
             $table->string('email')->nullable();
-            //$table->timestamps(); // created_at & updated_at
+            $table->timestamps(); // created_at & updated_at
         });
     }
 

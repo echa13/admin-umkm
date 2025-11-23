@@ -10,11 +10,25 @@ class UmkmController extends Controller
     /**
      * Tampilkan semua data UMKM
      */
-    public function index()
+    public function index(Request $request)
     {
-        // Ambil semua data UMKM
-        $umkms = Umkm::all();
-        return view('pages.umkm.index', compact('umkms'));
+        $umkms = Umkm::with('pemilik')
+            ->when($request->search, function ($q) use ($request) {
+                $q->where('nama_usaha', 'like', '%' . $request->search . '%')
+                    ->orWhereHas('pemilik', function ($w) use ($request) {
+                        $w->where('nama', 'like', '%' . $request->search . '%');
+                    });
+            })
+            ->when($request->kategori, function ($q) use ($request) {
+                $q->where('kategori', $request->kategori);
+            })
+            ->orderBy('nama_usaha', 'asc')
+            ->paginate(10);
+
+        // Untuk filter list kategori unik
+        $kategoriList = Umkm::select('kategori')->distinct()->get();
+
+        return view('pages.umkm.index', compact('umkms', 'kategoriList'));
     }
 
     /**

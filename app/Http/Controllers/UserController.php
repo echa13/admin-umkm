@@ -10,9 +10,15 @@ class UserController extends Controller
     /**
      * Menampilkan daftar user.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::all();
+        $users = User::when($request->search, function ($query) use ($request) {
+            $query->where('name', 'like', '%' . $request->search . '%')
+                ->orWhere('email', 'like', '%' . $request->search . '%');
+        })
+            ->orderBy('created_at', 'DESC')
+            ->paginate(8); // jumlah per halaman
+
         return view('pages.user.index', compact('users'));
     }
 
