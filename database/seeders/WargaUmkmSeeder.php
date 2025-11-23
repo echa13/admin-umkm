@@ -2,14 +2,13 @@
 
 namespace Database\Seeders;
 
-use Faker\Factory as Faker;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class WargaUmkmSeeder extends Seeder
 {
     /**
-     * Jalankan seeder.
+     * Run the database seeds.
      */
     public function run(): void
     {
@@ -18,7 +17,7 @@ class WargaUmkmSeeder extends Seeder
         // ----------------------
         // Generate 100 Warga
         // ----------------------
-        $wargaIds = []; // menyimpan ID warga yang sudah dibuat
+        $wargaIds = []; 
 
         for ($i = 1; $i <= 100; $i++) {
             $id = DB::table('warga')->insertGetId([
