@@ -16,7 +16,7 @@ class WargaUmkmSeeder extends Seeder
         $faker = Faker::create('id_ID'); // Locale Indonesia
 
         // ----------------------
-        // 1. Generate 100 Warga
+        // Generate 100 Warga
         // ----------------------
         $wargaIds = []; // menyimpan ID warga yang sudah dibuat
 
@@ -37,7 +37,7 @@ class WargaUmkmSeeder extends Seeder
         }
 
         // ----------------------
-        // 2. Generate 100 UMKM
+        // Generate 100 UMKM
         // ----------------------
         $kategori = ['Kuliner', 'Sembako', 'Jasa', 'Fashion', 'Kerajinan', 'Percetakan', 'Elektronik', 'Pertanian'];
 
