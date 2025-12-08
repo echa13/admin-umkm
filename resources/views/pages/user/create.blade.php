@@ -1,31 +1,36 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <title>Register</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            background: url('{{ asset("asset/img/bg-login.png") }}') center/cover no-repeat fixed;
+            background: url('{{ asset('asset/img/bg-login.png') }}') center/cover no-repeat fixed;
             height: 100vh;
         }
+
         .register-card {
             border-radius: 20px;
             overflow: hidden;
             max-width: 900px;
             width: 100%;
         }
+
         .left-panel {
             background: rgba(13, 110, 253, 0.9);
             color: white;
             padding: 3rem 2rem;
         }
+
         .left-panel img {
             width: 100px;
             height: 100px;
             object-fit: contain;
             margin-bottom: 20px;
         }
+
         .right-panel {
             background: white;
             padding: 3rem;
@@ -43,7 +48,8 @@
                 <img src="{{ asset('asset/img/logo_modul.png') }}" alt="Logo Modul">
                 <h3 class="fw-bold mb-3">UMKM</h3>
                 <p>
-                    Bergabunglah dengan <strong>Bina Desa UMKM</strong> dan nikmati kemudahan dalam pengelolaan akun serta aktivitas bisnis Anda!
+                    Bergabunglah dengan <strong>Bina Desa UMKM</strong> dan nikmati kemudahan dalam pengelolaan akun
+                    serta aktivitas bisnis Anda!
                 </p>
             </div>
 
@@ -52,7 +58,7 @@
                 <h3 class="text-center mb-4 fw-bold text-primary">Register Akun</h3>
 
                 {{-- Pesan sukses --}}
-                @if(session('success'))
+                @if (session('success'))
                     <div class="alert alert-success">{{ session('success') }}</div>
                 @endif
 
@@ -73,15 +79,9 @@
                     {{-- Nama --}}
                     <div class="mb-3">
                         <label for="name" class="form-label fw-semibold">Nama Lengkap</label>
-                        <input
-                            type="text"
-                            id="name"
-                            name="name"
-                            class="form-control @error('name') is-invalid @enderror"
-                            value="{{ old('name') }}"
-                            placeholder="Masukkan nama lengkap"
-                            required
-                        >
+                        <input type="text" id="name" name="name"
+                            class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}"
+                            placeholder="Masukkan nama lengkap" required>
                         @error('name')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -90,31 +90,34 @@
                     {{-- Email --}}
                     <div class="mb-3">
                         <label for="email" class="form-label fw-semibold">Email</label>
-                        <input
-                            type="email"
-                            id="email"
-                            name="email"
-                            class="form-control @error('email') is-invalid @enderror"
-                            value="{{ old('email') }}"
-                            placeholder="Masukkan email"
-                            required
-                        >
+                        <input type="email" id="email" name="email"
+                            class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}"
+                            placeholder="Masukkan email" required>
                         @error('email')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
+                    {{-- Role --}}
+                    <div class="mb-3">
+                        <label for="role" class="form-label fw-semibold">Role</label>
+                        <select id="role" name="role" class="form-select @error('role') is-invalid @enderror"
+                            required>
+                            <option value="" disabled selected>Pilih role</option>
+                            <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin</option>
+                            <option value="pemilik" {{ old('role') == 'pemilik' ? 'selected' : '' }}>Pemilik</option>
+                        </select>
+                        @error('role')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
 
                     {{-- Password --}}
                     <div class="mb-3">
                         <label for="password" class="form-label fw-semibold">Password</label>
-                        <input
-                            type="password"
-                            id="password"
-                            name="password"
-                            class="form-control @error('password') is-invalid @enderror"
-                            placeholder="Masukkan password"
-                            required
-                        >
+                        <input type="password" id="password" name="password"
+                            class="form-control @error('password') is-invalid @enderror" placeholder="Masukkan password"
+                            required>
                         @error('password')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -135,4 +138,5 @@
     </div>
 
 </body>
+
 </html>

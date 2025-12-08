@@ -37,4 +37,10 @@ class Umkm extends Model
     {
         return $this->belongsTo(Warga::class, 'pemilik_warga_id', 'warga_id');
     }
+    public function media()
+    {
+        return $this->hasMany(Media::class, 'ref_id', 'umkm_id') // 'id' diganti sesuai primary key Umkm
+            ->where('ref_table', 'umkm');
+    }
+
 }

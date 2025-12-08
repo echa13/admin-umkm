@@ -4,11 +4,18 @@ namespace App\Http\Controllers;
 use App\Models\Umkm;
 use App\Models\User;
 use App\Models\Warga;
+use Illuminate\Support\Facades\Auth;
 
 class AdminDashboardController extends Controller
 {
     public function index()
     {
+        if (! Auth::check()) {
+            // Jika user belum login, redirect ke halaman login
+            return redirect()->route('login')->with('error','Silakan login!');
+        }
+
+        // Jika sudah login, tampilkan dashboard
         return view('pages.index', [
             'totalWarga'  => Warga::count(),
             'totalUser'   => User::count(),
@@ -20,4 +27,5 @@ class AdminDashboardController extends Controller
             'activities'  => [],
         ]);
     }
+
 }

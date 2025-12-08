@@ -16,7 +16,7 @@
     </form>
 
     <div class="navbar-nav align-items-center ms-auto">
-        @if(session('user'))
+        @if(Auth::check())
             <!-- Jika user sudah login -->
             <div class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
@@ -25,7 +25,7 @@
                          alt="User"
                          style="width: 48px; height: 48px; object-fit: cover;">
                     <span class="d-none d-lg-inline-flex fw-semibold text-dark">
-                        {{ session('user')->name }}
+                        {{ Auth::user()->name }}
                     </span>
                 </a>
 

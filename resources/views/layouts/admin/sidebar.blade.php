@@ -12,18 +12,18 @@
                     src="{{ asset('asset/img/user.jpg') }}"
                     alt="User"
                     style="width: 48px; height: 48px;">
-                @if(session('user'))
+                @if(Auth::check())
                     <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"
                         style="width: 14px; height: 14px;"></div>
                 @endif
             </div>
             <div class="ms-3">
-                @if(session('user'))
+                @if(Auth::check())
                     <h6 class="mb-0 fw-semibold text-dark">
-                        {{ session('user')->name }}
+                        {{ Auth::user()->name }}
                     </h6>
                     <small class="text-success">
-                        <i class="fa fa-circle me-1" style="font-size:8px;"></i> Online (Admin)
+                        <i class="fa fa-circle me-1" style="font-size:8px;"></i> Online ({{Auth::user()->role ?? 'Admin' }})
                     </small>
                 @else
                     <h6 class="mb-0 fw-semibold text-secondary">

@@ -52,9 +52,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse ($umkms as $index => $item)
+                    @forelse ($umkm as $index => $item)
                         <tr>
-                            <td class="text-center">{{ $umkms->firstItem() + $index }}</td>
+                            <td class="text-center">{{ $umkm->firstItem() + $index }}</td>
                             <td>{{ $item->nama_usaha }}</td>
                             <td>{{ $item->pemilik?->nama ?? '-' }}</td>
                             <td>{{ $item->kategori }}</td>
@@ -82,7 +82,7 @@
 
             {{-- Pagination --}}
             <div class="mt-2 d-flex justify-content-center">
-                {{ $umkms->appends(request()->query())->links('pagination::bootstrap-5') }}
+                {{ $umkm->appends(request()->query())->links('pagination::bootstrap-5') }}
             </div>
         </div>
     </div>

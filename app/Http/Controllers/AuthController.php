@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
@@ -12,9 +13,13 @@ class AuthController extends Controller
      */
     public function index()
     {
-        return view('pages.auth.login');
+        if (Auth::check()) {
+        // Jika user sudah login, langsung ke dashboard
+        return redirect()->route('home');
     }
 
+        // Jika belum login, tampilkan halaman login
+        return view('pages.auth.login');}
     public function login(Request $request)
     {
         $request->validate([
@@ -27,12 +32,17 @@ class AuthController extends Controller
             'password.min'      => 'Password minimal 8 karakter!',
         ]);
 
-        // Cek user di database
+        // Cari user
         $user = User::where('email', $request->email)->first();
 
         if ($user && Hash::check($request->password, $user->password)) {
-            // Simpan sesi login
-            session(['user' => $user]);
+            // Login pakai Auth
+            Auth::login($user);
+
+            // Simpan waktu login
+            session(['last_login' => now()]);
+
+            // Redirect ke dashboard
             return redirect()->route('home')->with('success', 'Login berhasil! Selamat datang, ' . $user->name);
         }
 
