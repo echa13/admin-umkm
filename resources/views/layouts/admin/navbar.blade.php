@@ -12,7 +12,7 @@
 
     <!-- Search bar -->
     <form class="d-none d-md-flex ms-4">
-        <input class="form-control border-0 rounded-pill px-4 py-2" type="search" placeholder="🔍  Search something...">
+        <input class="form-control border-0 rounded-pill px-4 py-2" type="search" placeholder="🔍  Pencarian..">
     </form>
 
     <div class="navbar-nav align-items-center ms-auto">

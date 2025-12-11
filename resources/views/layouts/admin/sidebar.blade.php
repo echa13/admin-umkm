@@ -63,6 +63,10 @@
                     </a>
                 </div>
             </div>
+            <a href="{{ route('kontak') }}"
+               class="nav-item nav-link {{ request()->routeIs('kontak') ? 'active' : '' }}">
+                <i class="fa fa-envelope me-2"></i>Kontak
+            </a>
         </div>
     </nav>
 </div>

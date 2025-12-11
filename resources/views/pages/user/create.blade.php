@@ -73,7 +73,7 @@
                     </div>
                 @endif
 
-                <form method="POST" action="{{ route('users.store') }}">
+                <form method="POST" action="{{ route('users.store') }}" enctype="multipart/form-data">
                     @csrf
 
                     {{-- Nama --}}
@@ -123,6 +123,11 @@
                         @enderror
                         <small class="text-muted">Minimal 8 karakter dan mengandung huruf kapital.</small>
                     </div>
+                    <div class="mb-3">
+                        <label class="form-label">Foto User</label>
+                        <input type="file" name="images[]" class="form-control" multiple>
+                    </div>
+
 
                     {{-- Tombol Register --}}
                     <button type="submit" class="btn btn-primary w-100 py-2 fw-bold">Daftar</button>

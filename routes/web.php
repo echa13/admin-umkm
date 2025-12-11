@@ -38,3 +38,10 @@ Route::delete('umkm/media/{media_id}', [UmkmController::class, 'destroyMedia'])
 Route::post('/auth/logout', [AuthController::class, 'logout'])
     ->middleware('checkislogin')
     ->name('auth.logout');
+
+Route::get('/users/{id}', [UserController::class, 'show'])->name('users.show');
+
+Route::get('/kontak', function () {
+    return view('pages.kontak');
+})->name('kontak');
+

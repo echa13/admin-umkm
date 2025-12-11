@@ -15,7 +15,7 @@
                 </div>
             @endif
 
-            <form action="{{ route('users.update', $user->id) }}" method="POST">
+            <form action="{{ route('users.update', $user->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
 
@@ -43,6 +43,11 @@
                     <input type="password" name="password" id="password" class="form-control"
                         placeholder="Kosongkan jika tidak ingin ubah password">
                 </div>
+                <div class="mb-3">
+                    <label class="form-label">Foto User</label>
+                    <input type="file" name="images[]" class="form-control" multiple>
+                </div>
+
 
                 <div class="d-flex justify-content-end">
                     <a href="{{ route('users.index') }}" class="btn btn-secondary me-2">Kembali</a>
