@@ -6,6 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Media extends Model
 {
+    protected $table = 'media';
     protected $primaryKey = 'media_id';
-    protected $fillable = ['ref_table', 'ref_id', 'file_name', 'caption', 'mime_type', 'sort_order'];
+
+    protected $fillable = [
+        'ref_table',
+        'ref_id',
+        'file_name',
+        'caption',
+        'mime_type',
+        'sort_order',
+    ];
 }

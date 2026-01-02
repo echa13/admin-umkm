@@ -5,8 +5,9 @@ use App\Models\Media;
 use App\Models\Umkm;
 use App\Models\Warga; // Import model Media
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage; // Import Storage facade
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
+
+// Import Storage facade
 
 // Import Str untuk generate nama file
 
@@ -51,56 +52,51 @@ class UmkmController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'nama_usaha'       => 'required|string|max:150',
-            'pemilik_warga_id' => 'required|integer|exists:warga, warga_id',
-            'alamat'           => 'required|string|max:255',
-            'rt'               => 'nullable|string|max:5',
-            'rw'               => 'nullable|string|max:5',
-            'kategori'         => 'required|string|max:100',
-            'kontak'           => 'nullable|string|max:20',
-            'deskripsi'        => 'nullable|string',
-            'images'           => 'nullable',
-            'images.*'         => 'file|mimes:png,jpg,gif,svg,webp|max:2048',
+        $request->validate([
+            'nama_usaha'       => 'required',
+            'pemilik_warga_id' => 'required',
+            'foto'             => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
-// Simpan data UMKM
-        $umkm = Umkm::create($validatedData);
+        $umkm = Umkm::create([
+            'nama_usaha'       => $request->nama_usaha,
+            'pemilik_warga_id' => $request->pemilik_warga_id,
+            'rt'               => $request->rt,
+            'rw'               => $request->rw,
+            'kategori'         => $request->kategori,
+            'kontak'           => $request->kontak,
+            'alamat'           => $request->alamat,
+            'deskripsi'        => $request->deskripsi,
+        ]);
 
-// Upload multiple file jika ada
-        if ($request->hasFile('images')) {
-            $sortOrder = 0;
-            foreach ($request->file('images') as $file) {
-                $fileName = time() . '_' . Str::random(10) . '.' . $file->getClientOriginalExtension();
-                $file->storeAs('umkm_media', $fileName, 'public');
+        if ($request->hasFile('foto')) {
+            $file = $request->file('foto');
 
-                // Pakai relasi media() supaya ref_id otomatis
-                $umkm->media()->create([
-                    'ref_table'  => 'umkm',
-                    'file_name'  => $fileName,
-                    'mime_type'  => $file->getClientMimeType(),
-                    'sort_order' => $sortOrder++,
-                    'caption'    => null,
-                ]);
-            }
+            $path = $file->store('umkm_media', 'public');
+
+            Media::create([
+                'ref_table' => 'umkm',
+                'ref_id'    => $umkm->umkm_id,
+                'file_name' => $file->getClientOriginalName(), // ✅ WAJIB
+                'file_path' => $path,                          // kalau ada kolom ini
+            ]);
         }
 
-        return redirect()->route('umkm.index')->with('success', 'Data UMKM dan media berhasil ditambahkan!');
+        return redirect()->route('umkm.index')->with('success', 'UMKM berhasil ditambahkan');
     }
     /**
      * Tampilkan detail data UMKM berdasarkan ID
      */
     public function show($id)
     {
-        $umkm = Umkm::with('pemilik')->findOrFail($id);
+        $umkm = Umkm::findOrFail($id);
 
-        // Ambil data media terkait
         $media = Media::where('ref_table', 'umkm')
-            ->where('ref_id', $umkm->id)
-            ->orderBy('sort_order')
-            ->get();
+            ->where('ref_id', $umkm->umkm_id)
+            ->first();
 
         return view('pages.umkm.show', compact('umkm', 'media'));
+
     }
 
     /**

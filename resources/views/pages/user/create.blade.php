@@ -45,7 +45,7 @@
 
             {{-- Panel kiri: identitas modul --}}
             <div class="col-md-6 left-panel d-flex flex-column justify-content-center align-items-center text-center">
-                <img src="{{ asset('asset/img/logo_modul.png') }}" alt="Logo Modul">
+                <img src="{{ asset('asset/img/logo-umkm.png') }}" alt="Logo Modul">
                 <h3 class="fw-bold mb-3">UMKM</h3>
                 <p>
                     Bergabunglah dengan <strong>Bina Desa UMKM</strong> dan nikmati kemudahan dalam pengelolaan akun

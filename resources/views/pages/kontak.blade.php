@@ -8,20 +8,20 @@
         /* 1. Warna Dasar & Konsistensi */
         /* Menggunakan Tailwind/Natural color: Blue/Slate */
         .text-pcr-blue {
-            color: #3b82f6 !important; /* Blue-500 Tailwind */
+            color: #0e203d !important; /* Blue-500 Tailwind */
         }
         .bg-pcr-blue {
-            background-color: #3b82f6 !important;
+            background-color: #0e203d !important;
         }
         .bg-pcr-blue:hover {
-            background-color: #2563eb !important; /* Blue-600 Tailwind */
+            background-color: #0e203d !important; /* Blue-600 Tailwind */
         }
         .contact-title-dark {
             color: #1e293b !important; /* Slate-800 */
         }
         .contact-card-split {
-            background-color: #ffffff;
-            border: 1px solid #e2e8f0; /* Slate-200 */
+            background-color: #c7ccd4;
+            border: 1px solid #c7ccd4; /* Slate-200 */
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
 
@@ -44,7 +44,7 @@
             height: 120px;
             padding: 4px;
             /* Border warna tunggal yang elegan */
-            background: #3b82f6; /* Blue-500 */
+            background: #294c86; /* Blue-500 */
             border-radius: 50%;
             margin-bottom: 1rem;
         }
@@ -65,14 +65,14 @@
             border-radius: 50%;
             text-decoration: none;
             color: #ffffff;
-            background-color: #3b82f6; /* Warna tunggal Blue-500 */
+            background-color: #294c86; /* Warna tunggal Blue-500 */
             transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
         }
 
         .social-circle:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-            background-color: #2563eb; /* Blue-600 saat hover */
+            background-color: #294c86; /* Blue-600 saat hover */
         }
 
         /* Menghilangkan CSS lama yang colorful */
@@ -94,7 +94,7 @@
 
                             {{-- FOTO PROFIL --}}
                             <div class="profile-photo-container mx-auto mx-md-0">
-                                <img src="{{ asset('asset/img/default.png') }}"
+                                <img src="{{ asset('asset/img/user.JPG') }}"
                                     alt="Foto Pengembang"
                                     class="rounded-circle profile-img-split">
                             </div>
@@ -102,7 +102,7 @@
                             {{-- DETAIL IDENTITAS --}}
                             <h4 class="fw-bolder mb-1 contact-title-dark">Salsabilla Adinda Putri</h4>
                             <p class="text-secondary mb-1">2457301129</p>
-                            <p class="text-secondary small mb-4">Kelas: **2 SI D**</p>
+                            <p class="text-secondary small mb-4">Kelas: 2 SI D</p>
 
                             <hr class="my-4">
 
@@ -111,7 +111,7 @@
                             <div class="mb-3">
                                 <div class="d-flex align-items-center mb-3 justify-content-center justify-content-md-start">
                                     <i class="fas fa-envelope fa-lg contact-icon me-3 text-pcr-blue"></i>
-                                    <a href="mailto:Salsabilla.p@example.com" class="text-decoration-none text-dark fw-medium">Salsabilla24si@mahasiswa.pcr.ac.id</a>
+                                    <a href="mailto:Salsabilla.p@example.com" class="text-decoration-none text-dark fw-medium">salsabila24si@mahasiswa.pcr.ac.id</a>
                                 </div>
                                 <div class="d-flex align-items-center mb-3 justify-content-center justify-content-md-start">
                                     <i class="fas fa-phone fa-lg contact-icon me-3 text-pcr-blue"></i>
@@ -132,7 +132,7 @@
 
                             {{-- Tombol Aksi (Kirim Pesan) --}}
                             <div class="mb-5 d-flex justify-content-center justify-content-md-end">
-                                <a href="mailto:Salsabilla.p@example.com" class="btn text-white d-flex align-items-center fw-bold btn-custom-send bg-pcr-blue hover:bg-pcr-blue">
+                                <a href="mailto:Salsabila@example.com" class="btn text-white d-flex align-items-center fw-bold btn-custom-send bg-pcr-blue hover:bg-pcr-blue">
                                     Kirim Pesan Langsung
                                     <i class="fas fa-arrow-right ms-2"></i>
                                 </a>
@@ -147,19 +147,19 @@
                             <div class="d-flex gap-3 social-icons-list justify-content-center justify-content-md-start">
 
                                 {{-- LinkedIn --}}
-                                <a href="https://www.linkedin.com/in/username" target="_blank" class="social-circle" title="LinkedIn">
+                                <a href="https://www.linkedin.com/in/salsabila-adinda-putri-502241394/" target="_blank" class="social-circle" title="LinkedIn">
                                     <i class="fab fa-linkedin-in fa-lg"></i>
                                 </a>
                                 {{-- GitHub --}}
-                                <a href="https://github.com/username" target="_blank" class="social-circle" title="GitHub">
+                                <a href="https://github.com/echa13/admin-umkm.git" target="_blank" class="social-circle" title="GitHub">
                                     <i class="fab fa-github fa-lg"></i>
                                 </a>
                                 {{-- Instagram --}}
-                                <a href="https://instagram.com/username" target="_blank" class="social-circle" title="Instagram">
+                                <a href="https://instagram.com/salsabiladindapp" target="_blank" class="social-circle" title="Instagram">
                                     <i class="fab fa-instagram fa-lg"></i>
                                 </a>
                                 {{-- Facebook --}}
-                                <a href="https://facebook.com/username" target="_blank" class="social-circle" title="Facebook">
+                                <a href="https://facebook.com/salsabiladindapp" target="_blank" class="social-circle" title="Facebook">
                                     <i class="fab fa-facebook-f fa-lg"></i>
                                 </a>
                             </div>

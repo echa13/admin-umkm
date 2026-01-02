@@ -1,11 +1,15 @@
 <?php
 
-use App\Http\Controllers\AdminDashboardController;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UmkmController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WargaController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProdukController;
+use App\Http\Controllers\PesananController;
+use App\Http\Controllers\UlasanProdukController;
+use App\Http\Controllers\DetailPesananController;
+use App\Http\Controllers\AdminDashboardController;
 
 // Route publik (login & register)
 Route::get('/', [AuthController::class, 'index'])->name('login');
@@ -45,3 +49,10 @@ Route::get('/kontak', function () {
     return view('pages.kontak');
 })->name('kontak');
 
+Route::resource('produk', ProdukController::class);
+
+Route::resource('pesanan', PesananController::class);
+
+Route::resource('detail_pesanan', DetailPesananController::class);
+
+Route::resource('ulasan_produk', UlasanProdukController::class);

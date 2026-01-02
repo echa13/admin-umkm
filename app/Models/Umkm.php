@@ -39,7 +39,7 @@ class Umkm extends Model
     }
     public function media()
     {
-        return $this->hasMany(Media::class, 'ref_id', 'umkm_id') // 'id' diganti sesuai primary key Umkm
+        return $this->hasMany(Media::class, 'ref_id')
             ->where('ref_table', 'umkm');
     }
 
