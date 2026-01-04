@@ -100,7 +100,7 @@
                             </div>
 
                             {{-- DETAIL IDENTITAS --}}
-                            <h4 class="fw-bolder mb-1 contact-title-dark">Salsabilla Adinda Putri</h4>
+                            <h4 class="fw-bolder mb-1 contact-title-dark">Salsabila Adinda Putri</h4>
                             <p class="text-secondary mb-1">2457301129</p>
                             <p class="text-secondary small mb-4">Kelas: 2 SI D</p>
 
