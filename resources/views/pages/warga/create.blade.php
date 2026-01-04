@@ -6,7 +6,7 @@
 <div class="container-fluid py-4 px-4" style="background: #f8fafc; min-height: 100vh;">
     <div class="d-flex align-items-center justify-content-between mb-4">
         <div>
-            <h2 class="fw-black text-slate-800 m-0 tracking-tight">Census <span class="text-sky">Registration</span></h2>
+            <h2 class="fw-black text-slate-800 m-0 tracking-tight"><span class="text-sky">Registration</span></h2>
             <p class="text-slate-500 small mb-0">Pendaftaran data warga baru ke dalam sistem kependudukan desa.</p>
         </div>
         <a href="{{ route('warga.index') }}" class="btn btn-elite-dark px-4 shadow-sm">
