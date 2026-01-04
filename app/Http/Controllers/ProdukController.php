@@ -1,10 +1,9 @@
 <?php
-
 namespace App\Http\Controllers;
 
+use App\Models\Media;
 use App\Models\Produk;
 use App\Models\Umkm;
-use App\Models\Media;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -25,33 +24,39 @@ class ProdukController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'umkm_id' => 'required|exists:umkm,umkm_id',
-            'nama_produk' => 'required|string|max:255',
-            'deskripsi' => 'nullable|string',
-            'harga' => 'required|numeric',
-            'stok' => 'required|integer',
-            'status' => 'required|in:tersedia,kosong',
-            'foto' => 'nullable|image|max:2048',
+            'nama_produk' => 'required',
+            'foto'        => 'required|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
-        $produk = Produk::create($request->all());
+        $produk = Produk::create([
+            'umkm_id'     => $request->umkm_id,
+            'nama_produk' => $request->nama_produk,
+            'deskripsi'   => $request->deskripsi,
+            'harga'       => $request->harga,
+            'stok'        => $request->stok,
+            'status'      => $request->status,
+        ]);
 
         if ($request->hasFile('foto')) {
             $file = $request->file('foto');
-            $fileName = time().'_'.$file->getClientOriginalName();
-            $file->storeAs('public/produk', $fileName);
+
+            // ⬇⬇⬇ INI PENTING
+            $file->storeAs(
+                'produk',          // folder
+                $file->hashName(), // nama unik
+                'public'           // DISK PUBLIC
+            );
 
             Media::create([
-                'ref_table' => 'produk',
-                'ref_id' => $produk->produk_id,
-                'file_name' => $fileName,
-                'caption' => $request->nama_produk,
-                'mime_type' => $file->getClientMimeType(),
+                'ref_table'  => 'produk',
+                'ref_id'     => $produk->produk_id,
+                'file_name'  => $file->hashName(),
+                'mime_type'  => $file->getClientMimeType(),
                 'sort_order' => 1,
             ]);
         }
 
-        return redirect()->route('produk.index')->with('success', 'Produk berhasil ditambahkan.');
+        return redirect()->route('produk.index')->with('success', 'Produk berhasil ditambahkan');
     }
 
     public function show(Produk $produk)
@@ -71,50 +76,70 @@ class ProdukController extends Controller
     public function update(Request $request, Produk $produk)
     {
         $request->validate([
-            'umkm_id' => 'required|exists:umkm,umkm_id',
+            'umkm_id'     => 'required|exists:umkm,umkm_id',
             'nama_produk' => 'required|string|max:255',
-            'deskripsi' => 'nullable|string',
-            'harga' => 'required|numeric',
-            'stok' => 'required|integer',
-            'status' => 'required|in:tersedia,kosong',
-            'foto' => 'nullable|image|max:2048',
+            'deskripsi'   => 'nullable|string',
+            'harga'       => 'required|numeric',
+            'stok'        => 'required|integer',
+            'status'      => 'required|in:tersedia,kosong',
+            'foto'        => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
-        $produk->update($request->all());
+        // update data produk (TANPA FOTO)
+        $produk->update([
+            'umkm_id'     => $request->umkm_id,
+            'nama_produk' => $request->nama_produk,
+            'deskripsi'   => $request->deskripsi,
+            'harga'       => $request->harga,
+            'stok'        => $request->stok,
+            'status'      => $request->status,
+        ]);
 
+        // JIKA ADA FOTO BARU
         if ($request->hasFile('foto')) {
+
+            // ambil media lama
             $oldMedia = Media::where('ref_table', 'produk')
-                             ->where('ref_id', $produk->produk_id)
-                             ->first();
-            if ($oldMedia) {
-                Storage::delete('public/produk/'.$oldMedia->file_name);
+                ->where('ref_id', $produk->produk_id)
+                ->first();
+
+            // hapus file lama
+            if ($oldMedia && Storage::disk('public')->exists('produk/' . $oldMedia->file_name)) {
+                Storage::disk('public')->delete('produk/' . $oldMedia->file_name);
                 $oldMedia->delete();
             }
 
+            // upload foto baru
             $file = $request->file('foto');
-            $fileName = time().'_'.$file->getClientOriginalName();
-            $file->storeAs('public/produk', $fileName);
+            $file->storeAs(
+                'produk',
+                $file->hashName(),
+                'public'
+            );
 
+            // simpan media baru
             Media::create([
-                'ref_table' => 'produk',
-                'ref_id' => $produk->produk_id,
-                'file_name' => $fileName,
-                'caption' => $request->nama_produk,
-                'mime_type' => $file->getClientMimeType(),
+                'ref_table'  => 'produk',
+                'ref_id'     => $produk->produk_id,
+                'file_name'  => $file->hashName(),
+                'caption'    => $request->nama_produk,
+                'mime_type'  => $file->getClientMimeType(),
                 'sort_order' => 1,
             ]);
         }
 
-        return redirect()->route('produk.index')->with('success', 'Produk berhasil diperbarui.');
+        return redirect()
+            ->route('produk.index')
+            ->with('success', 'Produk berhasil diperbarui');
     }
 
     public function destroy(Produk $produk)
     {
         $medias = Media::where('ref_table', 'produk')
-                       ->where('ref_id', $produk->produk_id)
-                       ->get();
-        foreach($medias as $media){
-            Storage::delete('public/produk/'.$media->file_name);
+            ->where('ref_id', $produk->produk_id)
+            ->get();
+        foreach ($medias as $media) {
+            Storage::delete('public/produk/' . $media->file_name);
             $media->delete();
         }
 

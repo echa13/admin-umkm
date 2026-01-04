@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -12,7 +11,7 @@ class Produk extends Model
     protected $primaryKey = 'produk_id';
 
     protected $fillable = [
-        'umkm_id', 'nama_produk', 'deskripsi', 'harga', 'stok', 'status'
+        'umkm_id', 'nama_produk', 'deskripsi', 'harga', 'stok', 'status',
     ];
 
     // Relasi ke UMKM
@@ -24,8 +23,9 @@ class Produk extends Model
     // Relasi ke media (manual, sesuai tabel media kamu)
     public function media()
     {
-        return $this->hasMany(Media::class, 'ref_id')
-                    ->where('ref_table', 'produk')
-                    ->orderBy('sort_order');
+        return $this->hasMany(Media::class, 'ref_id', 'produk_id')
+            ->where('ref_table', 'produk')
+            ->orderBy('sort_order');
     }
+
 }

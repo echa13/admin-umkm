@@ -9,6 +9,8 @@ class Media extends Model
     protected $table = 'media';
     protected $primaryKey = 'media_id';
 
+    public $timestamps = false; // 🔥 WAJIB
+
     protected $fillable = [
         'ref_table',
         'ref_id',

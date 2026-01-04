@@ -113,7 +113,7 @@
                         @if ($foto && $foto->file_name)
                             <img src="{{ asset('storage/umkm_media/' . $foto->file_name) }}" class="img-fluid" alt="Foto UMKM">
                         @else
-                            <img src="{{ asset('asset/img/default.png') }}" class="img-fluid opacity-50" alt="Default UMKM">
+                            <img src="{{ asset('asset/img/logo-umkm.png') }}" class="img-fluid opacity-50" alt="Default UMKM">
                         @endif
                     </div>
                 </div>

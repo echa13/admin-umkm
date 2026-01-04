@@ -53,11 +53,12 @@ class UmkmController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama_usaha'       => 'required',
-            'pemilik_warga_id' => 'required',
-            'foto'             => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'nama_usaha'       => 'required|string|max:150',
+            'pemilik_warga_id' => 'required|exists:warga,warga_id',
+            'foto'             => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
 
+        // Simpan UMKM
         $umkm = Umkm::create([
             'nama_usaha'       => $request->nama_usaha,
             'pemilik_warga_id' => $request->pemilik_warga_id,
@@ -69,21 +70,27 @@ class UmkmController extends Controller
             'deskripsi'        => $request->deskripsi,
         ]);
 
+        // Upload foto (JALUR BENAR)
         if ($request->hasFile('foto')) {
             $file = $request->file('foto');
 
+            // 🔥 SIMPAN KE storage/app/public/produk
             $path = $file->store('umkm_media', 'public');
 
             Media::create([
-                'ref_table' => 'umkm',
-                'ref_id'    => $umkm->umkm_id,
-                'file_name' => $file->getClientOriginalName(), // ✅ WAJIB
-                'file_path' => $path,                          // kalau ada kolom ini
+                'ref_table'  => 'umkm',
+                'ref_id'     => $umkm->umkm_id,
+                'file_name'  => basename($path),
+                'mime_type'  => $file->getClientMimeType(),
+                'sort_order' => 1,
             ]);
+
         }
 
-        return redirect()->route('umkm.index')->with('success', 'UMKM berhasil ditambahkan');
+        return redirect()->route('umkm.index')
+            ->with('success', 'UMKM berhasil ditambahkan');
     }
+
     /**
      * Tampilkan detail data UMKM berdasarkan ID
      */
@@ -115,45 +122,53 @@ class UmkmController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validatedData = $request->validate([
+        $request->validate([
             'nama_usaha'       => 'required|string|max:150',
-            'pemilik_warga_id' => 'required|integer|exists:warga,warga_id',
+            'pemilik_warga_id' => 'required|exists:warga,warga_id',
             'alamat'           => 'required|string|max:255',
             'rt'               => 'nullable|string|max:5',
             'rw'               => 'nullable|string|max:5',
             'kategori'         => 'required|string|max:100',
             'kontak'           => 'nullable|string|max:20',
             'deskripsi'        => 'nullable|string',
-            'images'           => 'nullable',
-            'images.*'         => 'file|mimes:png,jpg,gif,svg,webp|max:2048',
+            'images.*'         => 'image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
 
         $umkm = Umkm::findOrFail($id);
 
-// Update data UMKM
-        $umkm->update($validatedData);
+        // Update data UMKM
+        $umkm->update([
+            'nama_usaha'       => $request->nama_usaha,
+            'pemilik_warga_id' => $request->pemilik_warga_id,
+            'alamat'           => $request->alamat,
+            'rt'               => $request->rt,
+            'rw'               => $request->rw,
+            'kategori'         => $request->kategori,
+            'kontak'           => $request->kontak,
+            'deskripsi'        => $request->deskripsi,
+        ]);
 
-// Upload multiple file baru jika ada
+        // Upload foto baru (MULTIPLE)
         if ($request->hasFile('images')) {
-            $sortOrder = 1; // default start dari 1
+            $lastOrder = $umkm->media()->max('sort_order') ?? 0;
 
             foreach ($request->file('images') as $file) {
-                $fileName = time() . '_' . $file->getClientOriginalExtension();
-                $file->storeAs('umkm_media', $fileName, 'public');
+                $path = $file->store('umkm_media', 'public');
 
-                // Pakai relasi media() supaya ref_id otomatis
                 $umkm->media()->create([
                     'ref_table'  => 'umkm',
-                    'file_name'  => $fileName,
+                    'file_name'  => basename($path),
                     'mime_type'  => $file->getClientMimeType(),
-                    'sort_order' => $sortOrder++,
-                    'caption'    => null,
+                    'sort_order' => ++$lastOrder,
                 ]);
+
             }
         }
 
-        return redirect()->route('umkm.index')->with('success', 'Data UMKM dan media berhasil diperbarui!');
+        return redirect()->route('umkm.index')
+            ->with('success', 'UMKM berhasil diperbarui');
     }
+
     public function destroy(Request $request, $id)
     {
         $umkm = Umkm::findOrFail($id);
@@ -191,6 +206,24 @@ class UmkmController extends Controller
             return redirect()->route('umkm.index')->with('success', 'Data UMKM dan media terkait berhasil dihapus!');
         }
 
+    }
+
+    public function destroyMedia(Media $media)
+    {
+        // keamanan: pastikan ini media UMKM
+        if ($media->ref_table !== 'umkm') {
+            abort(403);
+        }
+
+        // hapus file
+        if (Storage::disk('public')->exists('produk/' . $media->file_name)) {
+            Storage::disk('public')->delete('produk/' . $media->file_name);
+        }
+
+        // hapus DB
+        $media->delete();
+
+        return back()->with('success', 'Foto berhasil dihapus');
     }
 
 }
