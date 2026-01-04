@@ -7,8 +7,8 @@
                     <img src="{{ asset('asset/img/logo-umkm.png') }}" alt="Logo">
                 </div>
                 <div class="brand-text text-start">
-                    <h5 class="brand-title">UMKM <span>HUB</span></h5>
-                    <span class="brand-subtitle">PRO PANEL</span>
+                    <h5 class="brand-title">UMKM</h5>
+                    <span class="brand-subtitle"></span>
                 </div>
             </a>
         </div>
